@@ -14,25 +14,32 @@ public class PlayerController : MonoBehaviour {
     private Vector3 mousePosition;
     public float moveSpeed = 0.1f;
 
+    float timerstart = 0.05f;
+    float timer;
+
     // Use this for initialization
     void Start()
     {
         HeavyBulletsRemaining = heavyBulletsMax;
+        timer = timerstart;
     }
 
     // Update is called once per frame
     void Update()
     {
-            mousePosition = Input.mousePosition;
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
+        timer -= Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.Mouse0)) {
+        mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
+
+        if (Input.GetKey(KeyCode.Mouse0) && timer < 0) {
             GameObject clone;
             clone = Instantiate(smallBullets) /*as Rigidbody2D*/;
             Rigidbody2D cloneRb = clone.GetComponent<Rigidbody2D>();
             clone.transform.position = transform.position + new Vector3(0, 1);
             cloneRb.velocity = transform.TransformDirection(Vector2.up * 10);
+            timer = timerstart;
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && HeavyBulletsRemaining > 0)

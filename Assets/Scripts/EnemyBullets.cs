@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullets : MonoBehaviour {
+public class EnemyBullets : MonoBehaviour {
 
     public int speed;
     public int damage = 1;
@@ -11,26 +11,28 @@ public class Bullets : MonoBehaviour {
 
     private Rigidbody2D rb;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         Vector2 movement = new Vector2(0, 1);
         rb.AddForce(movement * speed);
 
-        Destroy(gameObject, 1);
+        Destroy(gameObject, 10);
     }
 
     void OnTriggerEnter2D(Collider2D c)
     {
-        if(c.gameObject.tag == "Enemy")
+        if (c.gameObject.tag == "Player")
         {
             Destroy(gameObject);
-            EnemyHealth enemyHealth = c.gameObject.GetComponent<EnemyHealth>();
-            enemyHealth.currentHealth -= damage;
+            PlayerHealth PlayerHealth = c.gameObject.GetComponent<PlayerHealth>();
+            PlayerHealth.currentHealth -= damage;
         }
     }
 }
