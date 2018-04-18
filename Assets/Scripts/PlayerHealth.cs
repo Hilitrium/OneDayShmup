@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
 
+    public bool player = false;
+
     public int maxHealth = 20;
     public int currentHealth;
 
@@ -19,16 +21,25 @@ public class PlayerHealth : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
-        if (currentHealth <= 0)
+        if (player == true)
         {
-            Destroy(gameObject);
-            timer -= Time.deltaTime;
-            if (timer <= 0)
+            if (currentHealth <= 0)
             {
-                string sceneName = SceneManager.GetActiveScene().name;
+                Destroy(gameObject);
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                {
+                    string sceneName = SceneManager.GetActiveScene().name;
 
-                SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+                    SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+                }
+            }
+        }
+        else if (player == false)
+        {
+            if (currentHealth <= 0)
+            {
+                Destroy(gameObject);
             }
         }
 
