@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullets : MonoBehaviour {
 
-    
     public int speed;
     public int damage = 1;
 
@@ -25,13 +24,14 @@ public class Bullets : MonoBehaviour {
         Destroy(gameObject, 1);
     }
 
-    void OnTriggerEnter2D(Collider2D c)
+    void OnTriggerEnter2D(Collider2D C)
     {
-        if(c.gameObject.tag == "Enemy")
+        if(C.gameObject.tag == "Enemy")
         {
             Destroy(gameObject);
-            EnemyHealth enemyHealth = c.gameObject.GetComponent<EnemyHealth>();
-            enemyHealth.currentHealth -= damage;
+            //EnemyHealth enemyHealth = c.gameObject.GetComponent<EnemyHealth>();
+            //enemyHealth.currentHealth -= damage;
+            C.GetComponent<BaseEnemy>().takeDamage(damage);
         }
     }
 }

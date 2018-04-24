@@ -2,47 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour {
+public class BaseEnemy : MonoBehaviour {
 
+    int currentHealth;
+    public int maxHealth = 30;
 
     public float distance;
     Vector2 destination;
     bool isMoving;
-	// Use this for initialization
+	
 	void Start ()
     {
         destination = transform.position + (Vector3)(Random.insideUnitCircle * distance);
+        currentHealth = maxHealth;
 	}
 	
     void Update()
     {
-        if (destination.y >DrawEnemyBox.instance.BW && destination.y < DrawEnemyBox.instance.TW 
-            && destination.x > DrawEnemyBox.instance.LW && destination.x < DrawEnemyBox.instance.RW
-            && isMoving == false)
+        if (isMoving == false)
         {
+            newDestination();
+            isMoving = true;
             StartCoroutine(movePos());
-            if(isMoving == false)
-            {
-                destination = transform.position + (Vector3)(Random.insideUnitCircle * distance);
-            }
         }
-        else
+
+        if (currentHealth <= 0)
         {
-            destination = transform.position + (Vector3)(Random.insideUnitCircle * distance);
+            Destroy(gameObject);
         }
     }
-
-    //void OnDrawGizmo()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawWireSphere(destination, 2);
-    //}
 
     IEnumerator movePos()
     {
         //Initialization
         float t = 0;
-        isMoving = true;
         Vector2 startpos = transform.position;
         float timeItTakes = 5;
         //Update
@@ -56,6 +49,15 @@ public class EnemyMove : MonoBehaviour {
         isMoving = false;
     }
 
-
+    void newDestination()
+    {
+        destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
+            Random.Range(DrawEnemyBox.instance.TW, DrawEnemyBox.instance.BW));
+    }
 	
+    public void takeDamage(int damageTaken)
+    {
+        currentHealth -= damageTaken;
+    }
+
 }

@@ -6,6 +6,7 @@ public class EnemyBullets : MonoBehaviour {
 
     public int speed;
     public int damage = 1;
+    public float lifetime = 5;
 
     //float lifetime = 8;
 
@@ -23,7 +24,7 @@ public class EnemyBullets : MonoBehaviour {
         Vector2 movement = new Vector2(0, 1);
         rb.AddForce(movement * speed);
 
-        Destroy(gameObject, 10);
+        Destroy(gameObject, lifetime);
     }
 
     void OnTriggerEnter2D(Collider2D c)

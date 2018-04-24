@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerHealth : MonoBehaviour {
+public class PlayerHealth : MonoBehaviour
+{
 
     public bool player = false;
 
@@ -21,27 +22,17 @@ public class PlayerHealth : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (player == true)
-        {
-            if (currentHealth <= 0)
-            {
-                Destroy(gameObject);
-                timer -= Time.deltaTime;
-                if (timer <= 0)
-                {
-                    string sceneName = SceneManager.GetActiveScene().name;
 
-                    SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-                }
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                string sceneName = SceneManager.GetActiveScene().name;
+
+                SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
             }
         }
-        else if (player == false)
-        {
-            if (currentHealth <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
-
     }
 }
