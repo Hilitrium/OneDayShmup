@@ -70,12 +70,14 @@ public class BaseEnemy : GameManager {
 
     protected void newDestination()
     {
+        //reset Destination
         destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
             Random.Range(DrawEnemyBox.instance.TW, DrawEnemyBox.instance.BW));
     }
 
     public void takeDamage(int damageTaken)
     {
+        //taking damage and death reset
         Debug.Log("damageTaken");
         currentHealth -= damageTaken;
         if (currentHealth <= 0)
@@ -86,15 +88,17 @@ public class BaseEnemy : GameManager {
 
     protected void resetEnemy()
     {
+        //reseting the enemy when sending back to pool
         PooledEnemy pool = GetComponent<PooledEnemy>();
         pool.returnToPool();
         currentHealth = maxHealth;
         destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
            Random.Range(DrawEnemyBox.instance.TW, DrawEnemyBox.instance.BW));
         isMoving = false;
+        enemiesKilled++;
     }
 
-    //Basis shoot function
+    //Basic shoot function
     protected void shoot()
     {
         float totalArc = shootArc * numOfBullets;
