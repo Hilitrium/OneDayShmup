@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BaseEnemyShoot : MonoBehaviour {
 
+    //------------------------------------------------//
+    //Refrain from using this script, it is outdated
+    //------------------------------------------------//
+
     public GameObject Bullet;
     public float speed;
     public int numOfBullets;
@@ -38,6 +42,7 @@ public class BaseEnemyShoot : MonoBehaviour {
             GameObject spawnedBullet = Instantiate(Bullet);
             spawnedBullet.transform.position = transform.position;
             spawnedBullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
+            spawnedBullet.transform.up = -shootDir.normalized;
             shootDir = Quaternion.AngleAxis(-shootArc, Vector3.forward) * shootDir;
         }
     }
@@ -57,6 +62,7 @@ public class BaseEnemyShoot : MonoBehaviour {
             GameObject spawnedBullet = Instantiate(Bullet);
             spawnedBullet.transform.position = transform.position;
             spawnedBullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
+            spawnedBullet.transform.up = -shootDir.normalized;
             shootDir = Quaternion.AngleAxis(-shootArc, Vector3.forward) * shootDir;
             yield return new WaitForSeconds(perBulletDelay);
         }

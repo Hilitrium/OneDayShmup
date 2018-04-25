@@ -11,5 +11,6 @@ public class PooledEnemy : MonoBehaviour {
         gameObject.SetActive(false);
         transform.parent = myPool.transform;
         myPool.pool.Push(gameObject);
+        Debug.Log("Returned To Pool");
     }
 }

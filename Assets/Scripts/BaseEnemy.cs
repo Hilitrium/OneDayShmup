@@ -2,23 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour {
-
-    int currentHealth;
+public class BaseEnemy : GameManager {
+    //Health
+    protected int currentHealth;
     public int maxHealth = 30;
 
+    //Movement
     public float distance;
     Vector2 destination;
-    bool isMoving;
-	
-	void Start ()
+    protected bool isMoving;
+
+    //Shooting
+    public GameObject Bullet;
+    public float speed;
+    public int numOfBullets;
+    public float bulletDelay;
+    protected float timer;
+
+    public float shootArc;
+    public float perBulletDelay;
+
+    void Start ()
     {
-        destination = transform.position + (Vector3)(Random.insideUnitCircle * distance);
-        currentHealth = maxHealth;
-	}
+        //Set a starting destination
+        destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
+            Random.Range(DrawEnemyBox.instance.TW, DrawEnemyBox.instance.BW));
+
+        //Set up timer
+        timer = bulletDelay;
+    }
 	
     void Update()
     {
+        //Ensure enemy is moving
         if (isMoving == false)
         {
             newDestination();
@@ -26,13 +42,16 @@ public class BaseEnemy : MonoBehaviour {
             StartCoroutine(movePos());
         }
 
-        if (currentHealth <= 0)
+        //firing weapons
+        timer -= Time.deltaTime;
+        if (timer <= 0)
         {
-            Destroy(gameObject);
+            shootDelay();
+            timer = bulletDelay;
         }
     }
 
-    IEnumerator movePos()
+    public IEnumerator movePos()
     {
         //Initialization
         float t = 0;
@@ -49,15 +68,67 @@ public class BaseEnemy : MonoBehaviour {
         isMoving = false;
     }
 
-    void newDestination()
+    protected void newDestination()
     {
         destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
             Random.Range(DrawEnemyBox.instance.TW, DrawEnemyBox.instance.BW));
     }
-	
+
     public void takeDamage(int damageTaken)
     {
+        Debug.Log("damageTaken");
         currentHealth -= damageTaken;
+        if (currentHealth <= 0)
+        {
+            resetEnemy();
+        }
     }
 
+    protected void resetEnemy()
+    {
+        PooledEnemy pool = GetComponent<PooledEnemy>();
+        pool.returnToPool();
+        currentHealth = maxHealth;
+        destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
+           Random.Range(DrawEnemyBox.instance.TW, DrawEnemyBox.instance.BW));
+        isMoving = false;
+    }
+
+    //Basis shoot function
+    protected void shoot()
+    {
+        float totalArc = shootArc * numOfBullets;
+        Vector2 shootDir = transform.up;
+        shootDir = Quaternion.AngleAxis(totalArc / 2, Vector3.forward) * shootDir;
+        for (int i = 0; i < numOfBullets; i++)
+        {
+            GameObject spawnedBullet = Instantiate(Bullet);
+            spawnedBullet.transform.position = transform.position;
+            spawnedBullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
+            spawnedBullet.transform.up = -shootDir.normalized;
+            shootDir = Quaternion.AngleAxis(-shootArc, Vector3.forward) * shootDir;
+        }
+    }
+
+    //Shooting with a delay between bullets
+    protected void shootDelay()
+    {
+        StartCoroutine(shootWithDelay());
+    }
+
+    IEnumerator shootWithDelay()
+    {
+        float totalArc = shootArc * numOfBullets;
+        Vector2 shootDir = transform.up;
+        shootDir = Quaternion.AngleAxis(totalArc / 2, Vector3.forward) * shootDir;
+        for (int i = 0; i < numOfBullets; i++)
+        {
+            GameObject spawnedBullet = Instantiate(Bullet);
+            spawnedBullet.transform.position = transform.position;
+            spawnedBullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
+            spawnedBullet.transform.up = -shootDir.normalized;
+            shootDir = Quaternion.AngleAxis(-shootArc, Vector3.forward) * shootDir;
+            yield return new WaitForSeconds(perBulletDelay);
+        }
+    }
 }

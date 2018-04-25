@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 50565105031809436}
   - component: {fileID: 60882066428444012}
   - component: {fileID: 114472112773430746}
-  - component: {fileID: 114024530433473690}
   - component: {fileID: 114505567538844076}
   m_Layer: 0
   m_Name: smallFighter
@@ -166,23 +165,6 @@ PolygonCollider2D:
       - {x: -1.36, y: -1.3399999}
       - {x: -0.95, y: -1.18}
       - {x: -0.84999996, y: -1.0799999}
---- !u!114 &114024530433473690
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1228695934874278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bbc11ac3a642bb4eab7b8b611fbc171, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bullet: {fileID: 1306627820339206, guid: 6519e242ccc35a54f8387c1f98cfaf20, type: 2}
-  speed: 4
-  numOfBullets: 10
-  bulletDelay: 2
-  shootArc: 10
-  perBulletDelay: 0
 --- !u!114 &114472112773430746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -196,6 +178,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 30
   distance: 20
+  Bullet: {fileID: 1306627820339206, guid: 6519e242ccc35a54f8387c1f98cfaf20, type: 2}
+  speed: 4
+  numOfBullets: 5
+  bulletDelay: 2
+  shootArc: 0
+  perBulletDelay: 0.2
 --- !u!114 &114505567538844076
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -28,6 +28,7 @@ public class BossAttack : MonoBehaviour {
             spawnedBullet.transform.position = transform.position;
             spawnedBullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
             shootDir = Quaternion.AngleAxis(-shootArc, Vector3.forward) * shootDir;
+            spawnedBullet.transform.up = -shootDir.normalized;
             yield return new WaitForSeconds(perBulletDelay);
         }
     }
@@ -42,6 +43,7 @@ public class BossAttack : MonoBehaviour {
             GameObject spawnedBullet = Instantiate(bullet);
             spawnedBullet.transform.position = transform.position;
             spawnedBullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
+            spawnedBullet.transform.up = -shootDir.normalized;
             shootDir = Quaternion.AngleAxis(-shootArc, Vector3.forward) * shootDir;
         }
     }
