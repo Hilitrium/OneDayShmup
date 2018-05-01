@@ -22,8 +22,9 @@ GameObject:
   - component: {fileID: 212663246842184622}
   - component: {fileID: 50912764057003264}
   - component: {fileID: 60256578387677408}
-  - component: {fileID: 114207861835473272}
   - component: {fileID: 114277544615521672}
+  - component: {fileID: 114667884225210716}
+  - component: {fileID: 114824536087761452}
   m_Layer: 0
   m_Name: Shotgunner
   m_TagString: Enemy
@@ -354,18 +355,6 @@ PolygonCollider2D:
       - {x: -1.48, y: -3.59}
       - {x: -1.56, y: -3.1}
       - {x: -1.5899999, y: -2.8799999}
---- !u!114 &114207861835473272
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1676900868436082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b84d4380228b0b419ef6e4596044fbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myPool: {fileID: 0}
 --- !u!114 &114277544615521672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -377,6 +366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff42e0ef725040c4b9798a3308e5b6f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smallEnemies: 40
+  shotgunners: 15
   maxHealth: 50
   distance: 0
   Bullet: {fileID: 1306627820339206, guid: 6519e242ccc35a54f8387c1f98cfaf20, type: 2}
@@ -386,6 +377,31 @@ MonoBehaviour:
   shootArc: 5
   perBulletDelay: 0
   rotationSpeed: 0.2
+--- !u!114 &114667884225210716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1676900868436082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2039de7439c6f31458aa31cf7616d1af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObj: {fileID: 1306627820339206, guid: 6519e242ccc35a54f8387c1f98cfaf20, type: 2}
+  poolAmount: 20
+--- !u!114 &114824536087761452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1676900868436082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b84d4380228b0b419ef6e4596044fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPool: {fileID: 0}
 --- !u!212 &212663246842184622
 SpriteRenderer:
   m_ObjectHideFlags: 1

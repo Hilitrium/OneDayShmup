@@ -11,9 +11,12 @@ public class Bullets : MonoBehaviour {
 
     private Rigidbody2D rb;
 
+    PooledObject pool;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        pool = GetComponent<PooledObject>();
 	}
 	
 	// Update is called once per frame
@@ -28,7 +31,7 @@ public class Bullets : MonoBehaviour {
     {
         if(C.gameObject.tag == "Enemy")
         {
-            Destroy(gameObject);
+            pool.returnToPool();
             //EnemyHealth enemyHealth = c.gameObject.GetComponent<EnemyHealth>();
             //enemyHealth.currentHealth -= damage;
             C.GetComponent<BaseEnemy>().takeDamage(damage);

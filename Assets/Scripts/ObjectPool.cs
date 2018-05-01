@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPool : MonoBehaviour {
+public class ObjectPool : MonoBehaviour {
 
-    public GameObject pooledEnemy;
+    public GameObject pooledObj;
     public Stack<GameObject> pool;
 
     public int poolAmount;
@@ -14,12 +14,13 @@ public class EnemyPool : MonoBehaviour {
         pool = new Stack<GameObject>();
         for (int i = 0; i < poolAmount; i++)
         {
-            GameObject spawnedObj = Instantiate(pooledEnemy);
+            GameObject spawnedObj = Instantiate(pooledObj);
             spawnedObj.transform.SetParent(transform);
-            spawnedObj.GetComponent<PooledEnemy>().myPool = this;
+            spawnedObj.GetComponent<PooledObject>().myPool = this;
             spawnedObj.SetActive(false);
             pool.Push(spawnedObj);
         }
+        Debug.Assert(pool.Count == poolAmount);
 	}
 	
 	public GameObject getObject()
@@ -33,10 +34,11 @@ public class EnemyPool : MonoBehaviour {
         }
         else
         {
+            Debug.LogError("wtf");
             poolAmount *= 2;
             for(int i = 0; i < poolAmount; i++)
             {
-                GameObject spawnedObj = Instantiate(pooledEnemy);
+                GameObject spawnedObj = Instantiate(pooledObj);
                 spawnedObj.transform.SetParent(transform);
 
                 spawnedObj.SetActive(false);

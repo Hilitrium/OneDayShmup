@@ -13,6 +13,7 @@ public class BaseEnemy : GameManager {
     protected bool isMoving;
 
     //Shooting
+    ObjectPool pool;
     public GameObject Bullet;
     public float speed;
     public int numOfBullets;
@@ -22,7 +23,20 @@ public class BaseEnemy : GameManager {
     public float shootArc;
     public float perBulletDelay;
 
-    void Start ()
+    protected virtual void Start ()
+    {
+        ////Set a starting destination
+        //destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
+        //    Random.Range(DrawEnemyBox.instance.TW, DrawEnemyBox.instance.BW));
+
+        ////Set up timer
+        //timer = bulletDelay;
+
+        //pool = GetComponent<ObjectPool>();
+        initBaseEnemy();
+    }
+
+    protected void initBaseEnemy()
     {
         //Set a starting destination
         destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
@@ -30,6 +44,8 @@ public class BaseEnemy : GameManager {
 
         //Set up timer
         timer = bulletDelay;
+
+        pool = GetComponent<ObjectPool>();
     }
 	
     void Update()
@@ -89,13 +105,13 @@ public class BaseEnemy : GameManager {
     protected void resetEnemy()
     {
         //reseting the enemy when sending back to pool
-        PooledEnemy pool = GetComponent<PooledEnemy>();
+        PooledObject pool = GetComponent<PooledObject>();
         pool.returnToPool();
         currentHealth = maxHealth;
         destination = new Vector2(Random.Range(DrawEnemyBox.instance.LW, DrawEnemyBox.instance.RW),
            Random.Range(DrawEnemyBox.instance.TW, DrawEnemyBox.instance.BW));
         isMoving = false;
-        enemiesKilled++;
+        //enemiesKilled++;
     }
 
     //Basic shoot function
@@ -106,10 +122,11 @@ public class BaseEnemy : GameManager {
         shootDir = Quaternion.AngleAxis(totalArc / 2, Vector3.forward) * shootDir;
         for (int i = 0; i < numOfBullets; i++)
         {
-            GameObject spawnedBullet = Instantiate(Bullet);
-            spawnedBullet.transform.position = transform.position;
-            spawnedBullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
-            spawnedBullet.transform.up = -shootDir.normalized;
+            //GameObject spawnedBullet = Instantiate(Bullet);
+            GameObject bullet = pool.getObject();
+            bullet.transform.position = transform.position;
+            bullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
+            bullet.transform.up = -shootDir.normalized;
             shootDir = Quaternion.AngleAxis(-shootArc, Vector3.forward) * shootDir;
         }
     }
@@ -127,7 +144,7 @@ public class BaseEnemy : GameManager {
         shootDir = Quaternion.AngleAxis(totalArc / 2, Vector3.forward) * shootDir;
         for (int i = 0; i < numOfBullets; i++)
         {
-            GameObject spawnedBullet = Instantiate(Bullet);
+            GameObject spawnedBullet = pool.getObject();
             spawnedBullet.transform.position = transform.position;
             spawnedBullet.GetComponent<Rigidbody2D>().velocity = shootDir * speed;
             spawnedBullet.transform.up = -shootDir.normalized;

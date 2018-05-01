@@ -23,8 +23,9 @@ GameObject:
   - component: {fileID: 50433263744297318}
   - component: {fileID: 114638168481173444}
   - component: {fileID: 58383832929725072}
+  - component: {fileID: 114654627195811928}
   m_Layer: 0
-  m_Name: BossBullet
+  m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,6 +92,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   damage: 1
+  lifetime: 5
+--- !u!114 &114654627195811928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1306627820339206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b84d4380228b0b419ef6e4596044fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPool: {fileID: 0}
 --- !u!212 &212861594409059342
 SpriteRenderer:
   m_ObjectHideFlags: 1

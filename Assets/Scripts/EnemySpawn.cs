@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour {
 
-    EnemyPool pool;
+    ObjectPool pool;
 
     public float timeBetweenSpawn = 7;
     private float timer;
 
 	// Use this for initialization
 	void Start () {
-        pool = GetComponent<EnemyPool>();
+        pool = GetComponent<ObjectPool>();
         timer = timeBetweenSpawn;
 	}
 	

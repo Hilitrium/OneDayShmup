@@ -12,6 +12,7 @@ public class ShotgunnerEnemy : BaseEnemy {
     public float rotationSpeed;
     // Use this for initialization
     void Start () {
+        initBaseEnemy();
         player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
@@ -43,7 +44,8 @@ public class ShotgunnerEnemy : BaseEnemy {
 	void Update () {
        // transform.up = player.transform.position - transform.position;
 
-        transform.up = Vector3.Slerp(transform.up, player.transform.position - transform.position, Time.deltaTime / rotationSpeed);
+        transform.up = Vector3.Slerp(transform.up, player.transform.position - transform.position, 
+            Time.deltaTime / rotationSpeed);
 
         if (isMoving == false)
         {

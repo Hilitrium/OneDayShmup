@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114342329956388750}
   - component: {fileID: 61787750973000734}
   - component: {fileID: 114840390703634508}
+  - component: {fileID: 114510146506275408}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Player
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1372014063235796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: -4.2, z: 0}
+  m_LocalPosition: {x: -0.01, y: -4.2, z: -29.25}
   m_LocalScale: {x: 0.49054515, y: 0.4905452, z: 0.4905452}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,7 +53,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -79,10 +80,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72f469d0aa67f54b9a0620e8e8e2bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallBullets: {fileID: 0}
-  HeavyBullets: {fileID: 0}
+  smallBullets: {fileID: 1048510382074520, guid: 21f3f389ecb4b0c41b1d346b815ae5d4,
+    type: 2}
+  HeavyBullets: {fileID: 1195193253278148, guid: ff5b3afc3f9c7f641bf2f61cfa537e53,
+    type: 2}
   heavyBulletsMax: 10
   moveSpeed: 0.3
+--- !u!114 &114510146506275408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1372014063235796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2039de7439c6f31458aa31cf7616d1af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObj: {fileID: 1048510382074520, guid: 21f3f389ecb4b0c41b1d346b815ae5d4, type: 2}
+  poolAmount: 100
 --- !u!114 &114840390703634508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41fc90cc1252844b924992a8d25b55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 1
   maxHealth: 20
   currentHealth: 0
 --- !u!212 &212858807389000974

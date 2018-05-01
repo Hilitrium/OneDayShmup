@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour {
     public int smallEnemies = 40;
     public int shotgunners = 15;
 
-    public int enemiesKilled;
+    protected int enemiesKilled;
 
-    public float timeSmallSpawn;
-    public float timeShotgunnerSpawn;
+    protected float timeSmallSpawn;
+    protected float timeShotgunnerSpawn;
 
     GameObject spawnSmall;
     GameObject spawnShotguns;

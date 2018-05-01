@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PooledEnemy : MonoBehaviour {
+public class PooledObject : MonoBehaviour {
 
-    public EnemyPool myPool;
+    public ObjectPool myPool;
 
     public void returnToPool()
     {
         gameObject.SetActive(false);
         transform.parent = myPool.transform;
         myPool.pool.Push(gameObject);
-        Debug.Log("Returned To Pool");
+        //Debug.Log("Returned To Pool");
     }
 }
