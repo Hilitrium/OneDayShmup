@@ -33,6 +33,11 @@ public class EnemySpawn : MonoBehaviour {
   //      }
 	}
 
+    public void getInfoFromGameManager(float newTimer)
+    {
+        timeBetweenSpawn = newTimer;
+    }
+
     void spawn()
     {
         GameObject spawnedEnemy = pool.getObject();

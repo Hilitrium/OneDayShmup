@@ -19,6 +19,7 @@ public class EnemyBullets : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody2D>();
         pool = GetComponent<PooledObject>();
+        OnReset();
     }
 
     // Update is called once per frame
@@ -30,6 +31,7 @@ public class EnemyBullets : MonoBehaviour {
         lifeTimer -= Time.deltaTime;
         if (lifeTimer <= 0)
         {
+            OnReset();
             pool.returnToPool();
         }
     }
@@ -38,8 +40,9 @@ public class EnemyBullets : MonoBehaviour {
     {
         if (c.gameObject.tag == "Player")
         {
-            PlayerHealth PlayerHealth = c.gameObject.GetComponent<PlayerHealth>();
-            PlayerHealth.currentHealth -= damage;
+            PlayerController PlayerController = c.gameObject.GetComponent<PlayerController>();
+            PlayerController.takeDamage(damage);
+            OnReset();
             pool.returnToPool();
         }
     }

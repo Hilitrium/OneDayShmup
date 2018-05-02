@@ -7,7 +7,8 @@ public class Bullets : MonoBehaviour {
     public int speed;
     public int damage = 1;
 
-    //float lifetime = 8;
+    public float lifetime = 6;
+    float timer;
 
     private Rigidbody2D rb;
 
@@ -17,6 +18,7 @@ public class Bullets : MonoBehaviour {
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         pool = GetComponent<PooledObject>();
+        timer = lifetime;
 	}
 	
 	// Update is called once per frame
@@ -24,17 +26,28 @@ public class Bullets : MonoBehaviour {
         Vector2 movement = new Vector2(0, 1);
         rb.AddForce(movement * speed);
 
-        Destroy(gameObject, 1);
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            timer = lifetime;
+            pool.returnToPool();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D C)
     {
         if(C.gameObject.tag == "Enemy")
         {
+            timer = lifetime;
             pool.returnToPool();
             //EnemyHealth enemyHealth = c.gameObject.GetComponent<EnemyHealth>();
             //enemyHealth.currentHealth -= damage;
-            C.GetComponent<BaseEnemy>().takeDamage(damage);
+            BaseEnemy enemy = C.GetComponent<BaseEnemy>();
+            if(enemy != null)
+            {
+                C.GetComponent<BaseEnemy>().takeDamage(damage);
+            }
+            
         }
     }
 }

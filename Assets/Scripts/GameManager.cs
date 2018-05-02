@@ -5,16 +5,19 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
-    public int smallEnemies = 40;
-    public int shotgunners = 15;
+    //public int smallEnemies = 40;
+    //public int shotgunners = 15;
 
-    protected int enemiesKilled;
+    public int enemiesKilled;
 
     protected float timeSmallSpawn;
     protected float timeShotgunnerSpawn;
 
-    GameObject spawnSmall;
-    GameObject spawnShotguns;
+    private float timeSmallStart;
+    private float timeShotgunnerStart;
+
+    public EnemySpawn spawnSmall;
+    public EnemySpawn spawnShotguns;
 
 	// Use this for initialization
 	void Start () {
@@ -27,11 +30,45 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        timeSmallStart = timeSmallSpawn;
+        timeShotgunnerStart = timeShotgunnerSpawn;
+
         DontDestroyOnLoad(gameObject);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    float calculateSmallSpawn()
+    {
+        float newTimeSmall = timeSmallSpawn - 0.1f;
+        return newTimeSmall;
+    }
+
+    float calculateShotgunSpawn()
+    {
+        float newTimeShotgun = timeShotgunnerSpawn - 0.055f;
+        return newTimeShotgun;
+    }
+    public void updateGameManager()
+    {
+        enemiesKilled++;
+        if (timeSmallSpawn > 1.5f)
+        {
+            //small Enemy adjustment
+            timeSmallSpawn = calculateSmallSpawn();
+            spawnSmall.getInfoFromGameManager(timeSmallSpawn);
+        }
+
+        if (timeShotgunnerSpawn > 2.0f)
+        {
+            //shotgunner Enemy spawn
+            timeShotgunnerSpawn = calculateShotgunSpawn();
+            spawnShotguns.getInfoFromGameManager(timeShotgunnerSpawn);
+        }
+        //Evaulate boss requirementss
+        if(enemiesKilled >= 50)
+        {
+
+        }
+        
+    }
+	
 }

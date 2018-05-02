@@ -1,32 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
+    //Bullets to use
     public GameObject smallBullets;
     public GameObject HeavyBullets;
 
+    //Total Heavy ammo
     public int heavyBulletsMax = 10;
     int HeavyBulletsRemaining;
 
+    //Mouse position and movement
     private Vector3 mousePosition;
     public float moveSpeed = 0.1f;
 
+    //Delay Between Shots
     float timerstart = 0.05f;
     float timer;
 
+    //Bullet pool
     ObjectPool pool;
 
-    // Use this for initialization
+    //Health
+    public int maxHealth = 20;
+    public int currentHealth;
+    float deathDelay = 2;
+
     void Start()
     {
+        currentHealth = maxHealth;
         HeavyBulletsRemaining = heavyBulletsMax;
         timer = timerstart;
         pool = GetComponent<ObjectPool>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;
@@ -53,6 +63,21 @@ public class PlayerController : MonoBehaviour {
             clone.transform.position = transform.position + new Vector3(0, 1);
             cloneRb.velocity = transform.TransformDirection(Vector2.up * 10);
             HeavyBulletsRemaining--;
+        }
+    }
+
+    public void takeDamage(int damageTaken)
+    {
+        currentHealth -= damageTaken;
+        if (currentHealth <= 0)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+            deathDelay -= Time.deltaTime;
+            if(timer <= 0)
+            {
+                string sceneName = SceneManager.GetActiveScene().name;
+                SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            }
         }
     }
 }

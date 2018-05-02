@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseEnemy : GameManager {
+public class BaseEnemy : MonoBehaviour
+{
     //Health
     protected int currentHealth;
-    public int maxHealth = 30;
+    public int maxHealth = 25;
 
     //Movement
     public float distance;
@@ -98,7 +99,9 @@ public class BaseEnemy : GameManager {
         currentHealth -= damageTaken;
         if (currentHealth <= 0)
         {
+            GameManager.instance.enemiesKilled++;
             resetEnemy();
+            GameManager.instance.updateGameManager();
         }
     }
 
